@@ -10,7 +10,42 @@ import Foundation
 extension Hero {
     
     func planetData(dataFile: String) -> String {
-        return ""
+        
+        var planetScore = Int()
+        var planet = String()
+        
+        enum pointScale: Int {
+            case Common = 1
+            case Uncommon = 2
+            case Rare = 3
+            case Legendary = 4
+        }
+        
+        let url = NSBundle.mainBundle().URLForResource(dataFile, withExtension: "json")!
+        let rawJSON = NSData(contentsOfURL: url)!
+        
+        var jsonArray: NSArray!
+        do {
+            jsonArray = try! NSJSONSerialization.JSONObjectWithData(rawJSON, options: NSJSONReadingOptions()) as! NSArray
+        }
+        
+        for item in jsonArray {
+            
+            var points = 0
+            
+            if let item = item as? NSDictionary {
+                points += item["CommonItemsDetected"] as! Int * pointScale.Common.rawValue
+                points += item["UncommonItemsDetected"] as! Int * pointScale.Uncommon.rawValue
+                points += item["RareItemsDetected"] as! Int * pointScale.Rare.rawValue
+                points += item["LegendaryItemsDetected"] as! Int * pointScale.Legendary.rawValue
+                
+                if points > planetScore {
+                    planetScore = points
+                    planet = item["Name"] as! String
+                }
+            }
+        }
+        return planet
     }
 }
 
