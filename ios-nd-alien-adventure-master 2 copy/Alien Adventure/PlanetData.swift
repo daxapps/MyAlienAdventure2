@@ -14,19 +14,19 @@ extension Hero {
         var planetScore = Int()
         var planet = String()
         
-        enum pointScale: Int {
-            case Common = 1
-            case Uncommon = 2
-            case Rare = 3
-            case Legendary = 4
-        }
-        
         let url = NSBundle.mainBundle().URLForResource(dataFile, withExtension: "json")!
         let rawJSON = NSData(contentsOfURL: url)!
         
         var jsonArray: NSArray!
         do {
             jsonArray = try! NSJSONSerialization.JSONObjectWithData(rawJSON, options: NSJSONReadingOptions()) as! NSArray
+        }
+        
+        enum pointScale: Int {
+            case Common = 1
+            case Uncommon = 2
+            case Rare = 3
+            case Legendary = 4
         }
         
         for item in jsonArray {

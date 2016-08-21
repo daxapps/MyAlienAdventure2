@@ -12,11 +12,7 @@ extension Hero {
     
     func xorCipherKeySearch(encryptedString: [UInt8]) -> UInt8 {
         
-        // NOTE: This code doesn't exactly mimic what is in the Lesson. We've
-        // added some print statements so that there are no warnings for 
-        // unused variables 😀.
-        var key: UInt8
-        key = 0
+        var key: UInt8 = 0
         
         for x in UInt8.min..<UInt8.max {
         
@@ -29,13 +25,10 @@ extension Hero {
                 // ADD CODE: perform decryption
                 let XORValue = x ^ character
                 decrypted.append(XORValue)
-                
-                print(character)
             }
             
             if let decryptedString = String(bytes: decrypted,
                 encoding: NSUTF8StringEncoding) where decryptedString == "udacity" {
-                    // ADD CODE: found match, now what?
                 key = x
             }
         }
@@ -43,5 +36,3 @@ extension Hero {
         return key
     }
 }
-
-// If you have completed this function and it is working correctly, feel free to skip this part of the adventure by opening the "Under the Hood" folder, and making the following change in Settings.swift: "static var RequestsToSkip = 3"
